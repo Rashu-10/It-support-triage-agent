@@ -3,24 +3,40 @@ from mcp.server.fastmcp import FastMCP
 mcp = FastMCP("it-support-triage")
 
 @mcp.tool()
-def check_system_status(service_name: str) -> str:
+def check_system_status(service: str) -> dict:
     """Check the status of a specific IT service.
     
     Args:
-        service_name: The name of the service to check (e.g., 'database', 'auth_service', 'api_gateway').
+        service: The name of the service to check (e.g., 'database', 'auth_service', 'api_gateway').
         
     Returns:
-        A string describing the current status.
+        A dictionary describing the service status.
     """
-    service = service_name.lower().strip()
-    if service in ["database", "db"]:
-        return "Service 'database' is degraded. Response latency is high (1500ms)."
-    elif service in ["auth_service", "auth"]:
-        return "Service 'auth_service' is running normally (active, 100% healthy)."
-    elif service in ["api_gateway", "gateway"]:
-        return "Service 'api_gateway' is running normally."
+    service_clean = service.lower().strip()
+    if service_clean in ["database", "db"]:
+        return {
+            "service": service,
+            "status": "degraded",
+            "message": "Service 'database' is degraded. Response latency is high (1500ms)."
+        }
+    elif service_clean in ["auth_service", "auth"]:
+        return {
+            "service": service,
+            "status": "healthy",
+            "message": "Service 'auth_service' is running normally (active, 100% healthy)."
+        }
+    elif service_clean in ["api_gateway", "gateway"]:
+        return {
+            "service": service,
+            "status": "healthy",
+            "message": "Service 'api_gateway' is running normally."
+        }
     else:
-        return f"Service '{service_name}' status is unknown."
+        return {
+            "service": service,
+            "status": "unknown",
+            "message": f"Service '{service}' status is unknown."
+        }
 
 @mcp.tool()
 def reset_user_password(username: str, email: str) -> str:
