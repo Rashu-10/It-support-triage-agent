@@ -51,7 +51,7 @@ graph TD
 
 ## How to Run
 
-* `make playground` : Launch the interactive local development playground UI at http://127.0.0.1:18081 (Access the agent interface directly at [http://127.0.0.1:18081/dev-ui/?app=app](http://127.0.0.1:18081/dev-ui/?app=app)).
+* `make playground` : Launch the interactive local development playground UI at http://127.0.0.1:18081/dev-ui/?app=app&userId=user&session=49d530ab-e9f7-4e69-8065-66fb4cc0d869
 * `make run` : Run in local production-ready CLI mode.
 * `make test` : Execute the test suites.
 
