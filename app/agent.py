@@ -37,7 +37,16 @@ class RetryingGemini(Gemini):
             except Exception as e:
                 err_str = str(e).upper()
                 if "503" in err_str or "UNAVAILABLE" in err_str or "HIGH DEMAND" in err_str or "429" in err_str or "RESOURCE_EXHAUSTED" in err_str:
-                    wait_time = 60 if ("429" in err_str or "RESOURCE_EXHAUSTED" in err_str) else (2 ** attempt)
+                    import re
+                    match = re.search(r"'RETRYDELAY':\s*'(\d+)S'", err_str)
+                    if match:
+                        wait_time = int(match.group(1)) + 1
+                    else:
+                        match2 = re.search(r"PLEASE RETRY IN (\d+(?:\.\d+)?)S", err_str)
+                        if match2:
+                            wait_time = int(float(match2.group(1))) + 1
+                        else:
+                            wait_time = 15
                     logger.warning(
                         f"Gemini API returned rate limit/unavailability. Retrying in {wait_time}s (attempt {attempt + 1}/{max_attempts}). Error: {e}"
                     )
