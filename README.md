@@ -50,8 +50,10 @@ graph TD
 * **Cover Banner**: ![Cover Page Banner](assets/cover_page_banner.png)
 
 ## How to Run
-* **Playground UI**: `make playground` (runs the interactive web testing playground on port 18081)
-* **Production Run**: `make run` (starts the local API server)
+
+* `make playground` : Launch the interactive local development playground UI at http://127.0.0.1:18081 (Access the agent interface directly at [http://127.0.0.1:18081/dev-ui/?app=app](http://127.0.0.1:18081/dev-ui/?app=app)).
+* `make run` : Run in local production-ready CLI mode.
+* `make test` : Execute the test suites.
 
 ## Sample Test Cases
 
